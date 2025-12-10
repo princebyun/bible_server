@@ -1,5 +1,8 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>성경 보기</title>
@@ -20,40 +23,38 @@
 <body>
 
 <!-- 공통 메뉴 삽입 -->
-<div th:replace="~{menu :: menu-fragment}"></div>
+<%@ include file="menu.jsp" %>
 
 <div class="container mt-4">
     <h1 class="mb-4">성경 보기</h1>
 
     <!-- 필터링 폼 -->
-    <form id="filterForm" th:action="@{/bible}" method="get" class="row g-3 align-items-end filter-form">
+    <form id="filterForm" action="/bible" method="get" class="row g-3 align-items-end filter-form">
         <div class="col-md-2">
             <label for="cate" class="form-label">구분</label>
             <select id="cate" name="cate" class="form-select" onchange="submitFormOnChange()">
                 <option value="">전체</option>
-                <option th:each="t, iter : ${testaments}"
-                        th:value="${iter.index + 1}"
-                        th:text="${t}"
-                        th:selected="${selectedCate != null and selectedCate == iter.index + 1}"></option>
+                <c:forEach var="t" items="${testaments}" varStatus="status">
+                    <option value="${status.index + 1}" ${selectedCate != null && selectedCate == status.index + 1 ? 'selected' : ''}>${t}</option>
+                </c:forEach>
             </select>
         </div>
         <div class="col-md-3">
             <label for="book" class="form-label">성경</label>
             <select id="book" name="book" class="form-select">
                 <option value="">전체</option>
-                <option th:each="b : ${books}"
-                        th:value="${b.book}"
-                        th:text="${b.longLabel}"
-                        th:selected="${selectedBook != null and selectedBook == b.book}"></option>
+                <c:forEach var="b" items="${books}">
+                    <option value="${b.book}" ${selectedBook != null && selectedBook == b.book ? 'selected' : ''}>${b.longLabel}</option>
+                </c:forEach>
             </select>
         </div>
         <div class="col-md-2">
             <label for="chapter" class="form-label">장</label>
-            <input type="number" id="chapter" name="chapter" class="form-control" th:value="${selectedChapter}">
+            <input type="number" id="chapter" name="chapter" class="form-control" value="${selectedChapter}">
         </div>
         <div class="col-md-2">
             <label for="paragraph" class="form-label">절</label>
-            <input type="number" id="paragraph" name="paragraph" class="form-control" th:value="${selectedParagraph}">
+            <input type="number" id="paragraph" name="paragraph" class="form-control" value="${selectedParagraph}">
         </div>
         <div class="col-md-3">
             <button type="submit" class="btn btn-primary w-100">검색</button>
@@ -62,15 +63,19 @@
 
     <!-- 성경 구절 목록 -->
     <div id="bible-content">
-        <div th:if="${#lists.isEmpty(verses)}" class="alert alert-info">
-            검색 결과가 없습니다.
-        </div>
-        <div th:each="verse : ${verses}" class="bible-verse">
-            <p>
-                <strong th:text="${verse.long_label + ' ' + verse.chapter + ':' + verse.paragraph}"></strong>
-                <span th:text="${verse.sentence}"></span>
-            </p>
-        </div>
+        <c:if test="${empty verses}">
+            <div class="alert alert-info">
+                검색 결과가 없습니다.
+            </div>
+        </c:if>
+        <c:forEach var="verse" items="${verses}">
+            <div class="bible-verse">
+                <p>
+                    <strong>${verse.long_label} ${verse.chapter}:${verse.paragraph}</strong>
+                    <span>${verse.sentence}</span>
+                </p>
+            </div>
+        </c:forEach>
     </div>
 
 </div>

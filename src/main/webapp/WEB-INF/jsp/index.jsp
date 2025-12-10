@@ -1,5 +1,6 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>성경책</title>
@@ -32,7 +33,7 @@
 </head>
 <body>
     <!-- 공통 메뉴 삽입 -->
-    <div th:replace="~{menu :: menu-fragment}"></div>
+    <%@ include file="menu.jsp" %>
 
     <div class="container main-container">
         <h1 class="main-title">The Holy Bible</h1>
