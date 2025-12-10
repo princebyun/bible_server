@@ -1,0 +1,23 @@
+body {
+    background-color: #f8f0e3; /* 양피지 느낌 배경색 */
+}
+.main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    text-align: center;
+}
+.main-title {
+    font-family: 'Times New Roman', serif;
+    font-size: 4rem;
+    font-weight: bold;
+    color: #5a4a42; /* 고풍스러운 텍스트 색상 */
+}
+.sub-title {
+    font-family: 'Georgia', serif;
+    font-size: 1.5rem;
+    color: #6c5b53;
+    margin-top: 10px;
+}

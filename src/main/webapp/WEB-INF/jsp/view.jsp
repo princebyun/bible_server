@@ -7,18 +7,7 @@
     <meta charset="UTF-8">
     <title>성경 보기</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body { padding-top: 56px; } /* 고정된 네비게이션 바 높이만큼 패딩 추가 */
-        .filter-form { margin-bottom: 30px; padding: 20px; background-color: #f8f9fa; border-radius: 8px; }
-        .bible-verse { border-bottom: 1px solid #eee; padding: 10px 0; }
-        .bible-verse:last-child { border-bottom: none; }
-        .navbar {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1030;
-        }
-    </style>
+    <link href="<c:url value='/resources/css/view.css'/>" rel="stylesheet">
 </head>
 <body>
 

@@ -1,0 +1,10 @@
+body { padding-top: 56px; } /* 고정된 네비게이션 바 높이만큼 패딩 추가 */
+.filter-form { margin-bottom: 30px; padding: 20px; background-color: #f8f9fa; border-radius: 8px; }
+.bible-verse { border-bottom: 1px solid #eee; padding: 10px 0; }
+.bible-verse:last-child { border-bottom: none; }
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1030;
+}

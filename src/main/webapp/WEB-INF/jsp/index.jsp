@@ -1,35 +1,12 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>성경책</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f8f0e3; /* 양피지 느낌 배경색 */
-        }
-        .main-container {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 80vh;
-            text-align: center;
-        }
-        .main-title {
-            font-family: 'Times New Roman', serif;
-            font-size: 4rem;
-            font-weight: bold;
-            color: #5a4a42; /* 고풍스러운 텍스트 색상 */
-        }
-        .sub-title {
-            font-family: 'Georgia', serif;
-            font-size: 1.5rem;
-            color: #6c5b53;
-            margin-top: 10px;
-        }
-    </style>
+    <link href="<c:url value='/resources/css/main.css'/>" rel="stylesheet">
 </head>
 <body>
     <!-- 공통 메뉴 삽입 -->
