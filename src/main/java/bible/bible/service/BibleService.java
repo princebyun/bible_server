@@ -2,7 +2,7 @@ package bible.bible.service;
 
 import bible.bible.domain.Bible;
 import bible.bible.domain.BookInfo;
-import bible.bible.repository.BibleRepository;
+import bible.bible.mapper.BibleMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,21 +10,21 @@ import java.util.List;
 @Service
 public class BibleService {
 
-    private final BibleRepository bibleRepository;
+    private final BibleMapper bibleMapper;
 
-    public BibleService(BibleRepository bibleRepository) {
-        this.bibleRepository = bibleRepository;
+    public BibleService(BibleMapper bibleMapper) {
+        this.bibleMapper = bibleMapper;
     }
 
     public List<Bible> getBibleVerses(Integer cate, Integer book, Integer chapter, Integer paragraph) {
-        return bibleRepository.findByFilter(cate, book, chapter, paragraph);
+        return bibleMapper.findByFilter(cate, book, chapter, paragraph);
     }
 
     public List<String> getTestaments() {
-        return bibleRepository.findDistinctTestaments();
+        return bibleMapper.findDistinctTestaments();
     }
 
     public List<BookInfo> getBooks(Integer cate) {
-        return bibleRepository.findDistinctBooks(cate);
+        return bibleMapper.findDistinctBooks(cate);
     }
 }
