@@ -2,12 +2,19 @@ package bible.bible;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 @SpringBootApplication
-public class BibleApplication {
+public class BibleApplication extends SpringBootServletInitializer {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BibleApplication.class, args);
-	}
+    @Override
+    protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
+        return application.sources(BibleApplication.class);
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(BibleApplication.class, args);
+    }
 
 }
