@@ -6,7 +6,9 @@
 <head>
     <meta charset="UTF-8">
     <title>성경 보기</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="<c:url value='/webjars/bootstrap/5.3.0/css/bootstrap.min.css'/>" rel="stylesheet">
+    <link href="<c:url value='/resources/css/menu.css'/>" rel="stylesheet">
     <link href="<c:url value='/resources/css/view.css'/>" rel="stylesheet">
 </head>
 <body>
@@ -69,7 +71,7 @@
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="<c:url value='/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js'/>"></script>
 <script>
     function submitFormOnChange() {
         // '구분' 변경 시 '성경'과 '장'을 초기화하지 않고 폼을 제출하여

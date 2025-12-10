@@ -5,7 +5,9 @@
 <head>
     <meta charset="UTF-8">
     <title>성경책</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="<c:url value='/webjars/bootstrap/5.3.0/css/bootstrap.min.css'/>" rel="stylesheet">
+    <link href="<c:url value='/resources/css/menu.css'/>" rel="stylesheet">
     <link href="<c:url value='/resources/css/main.css'/>" rel="stylesheet">
 </head>
 <body>
@@ -17,6 +19,6 @@
         <p class="sub-title">당신의 삶에 말씀이 함께하기를</p>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="<c:url value='/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js'/>"></script>
 </body>
 </html>
