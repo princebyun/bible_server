@@ -21,7 +21,7 @@
     <!-- 챗봇 스타일 검색창 -->
     <div class="chat-search-container mt-5">
         <form action="<c:url value='/bible'/>" method="get" class="d-flex align-items-center">
-            <input class="form-control me-2 flex-grow-1" type="search" name="keyword" placeholder="단어나 구절 입력 (예: 예수)"
+            <input class="form-control me-2 flex-grow-1" type="search" name="keyword" placeholder="단어나 구절 입력 (예: 예수?)"
                    aria-label="Search">
             <button class="btn btn-outline-success text-nowrap" type="submit">검색</button>
         </form>
