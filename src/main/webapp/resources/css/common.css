@@ -99,25 +99,38 @@ body {
     border-color: #009ACD;
 }
 
-/* 아코디언 (성경 구절 목록) */
+/* 아코디언 (성경 구절 목록) 수정 */
 .accordion-item {
-    border: 1px solid #dee2e6;
-    border-radius: 0.25rem;
+    border: none; /* 기본 테두리 제거 */
+    border-radius: 0.5rem; /* 둥근 모서리 */
     margin-bottom: 1rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08); /* 그림자 추가 */
+    overflow: hidden; /* 둥근 모서리 적용을 위해 */
 }
 
 .accordion-header .accordion-button {
     font-weight: 600;
     color: #343a40;
-    background-color: #f8f9fa;
+    background-color: #ffffff; /* 배경을 흰색으로 변경 */
+    border-bottom: 1px solid #f0f0f0; /* 헤더와 바디 구분선 */
 }
 
+/* 아코디언이 열렸을 때 버튼 스타일 */
 .accordion-header .accordion-button:not(.collapsed) {
-    background-color: #e9ecef;
+    background-color: #f5fcff; /* 아주 옅은 하늘색 */
+    color: #007bff;
+    box-shadow: none;
+}
+
+/* 아코디언 버튼 포커스 효과 제거 (기본 파란색 테두리) */
+.accordion-button:focus {
+    box-shadow: none;
+    border-color: rgba(0,0,0,.125);
 }
 
 .accordion-body {
     padding: 1.5rem;
+    background-color: #ffffff;
 }
 
 /* 성경 구절 스타일 */
