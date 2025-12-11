@@ -130,8 +130,8 @@ body, html {
     flex-shrink: 0;
 }
 
-/* 모바일 대응 (768px 이하) */
-@media (max-width: 768px) {
+/* 모바일 대응 (767px 이하) */
+@media (max-width: 767px) {
     body, html {
         height: auto; /* 모바일에서는 스크롤 허용 */
         overflow: auto;
