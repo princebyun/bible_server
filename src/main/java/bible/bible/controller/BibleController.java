@@ -30,7 +30,6 @@ public class BibleController {
             @RequestParam Optional<String> keyword, // keyword 파라미터 추가
             Model model) {
 
-        // 파라미터가 없으면 초기값 설정
         Integer finalCate = cate.orElse(null);
         Integer finalBook = book.orElse(null);
         Integer finalChapter = chapter.orElse(null);
@@ -42,13 +41,12 @@ public class BibleController {
         model.addAttribute("testaments", bibleService.getTestaments());
         model.addAttribute("books", bibleService.getBooks(finalCate));
 
-        // 필터 선택 값을 유지하기 위해 모델에 추가
         model.addAttribute("selectedCate", finalCate);
         model.addAttribute("selectedBook", finalBook);
         model.addAttribute("selectedChapter", finalChapter);
         model.addAttribute("selectedParagraph", finalParagraph);
         model.addAttribute("selectedKeyword", finalKeyword); // keyword 값 유지
 
-        return "view"; // 성경 보기 화면 (view.jsp)
+        return "view";
     }
 }
