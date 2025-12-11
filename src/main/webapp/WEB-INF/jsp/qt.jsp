@@ -29,7 +29,8 @@
             <!-- 캡처 대상 영역에 ID 부여 -->
             <div class="row g-3 h-100" id="capture-area"> <!-- g-3으로 간격 축소, h-100으로 높이 꽉 채움 -->
                 <!-- 왼쪽: 큐티 본문 -->
-                <div class="col-lg-6 h-100">
+                <!-- col-lg-6 -> col-md-6 변경: 태블릿(768px 이상)에서도 2단 레이아웃 유지 -->
+                <div class="col-md-6 h-100">
                     <div class="qt-content-area">
                         <div class="qt-header">
                             <p class="qt-date">${date}</p>
@@ -48,7 +49,8 @@
                 </div>
 
                 <!-- 오른쪽: 묵상 노트 -->
-                <div class="col-lg-6 h-100">
+                <!-- col-lg-6 -> col-md-6 변경 -->
+                <div class="col-md-6 h-100">
                     <div class="qt-note-area">
                         <h2 class="note-title">나의 묵상</h2>
                         <textarea class="note-textarea" placeholder="오늘 말씀을 통해 받은 은혜를 기록해보세요..."></textarea>

@@ -144,8 +144,8 @@ body {
     line-height: 1.5;
 }
 
-/* 모바일 환경 (가로 768px 이하) */
-@media (max-width: 768px) {
+/* 모바일 환경 (가로 767px 이하) */
+@media (max-width: 767px) {
     .main-title {
         font-size: 2rem;
     }

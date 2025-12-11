@@ -148,8 +148,8 @@ body {
     color: #00BFFF; /* 강조 색상도 하늘색 계열로 변경 */
 }
 
-/* 모바일 환경 헤더 메뉴 간격 조정 */
-@media (max-width: 991px) {
+/* 모바일 환경 헤더 메뉴 간격 조정 (991px -> 767px) */
+@media (max-width: 767px) {
     .site-header .navbar-collapse {
         padding-top: 15px; /* 메뉴 상단 여백 */
     }
