@@ -27,7 +27,7 @@ public class BibleController {
             @RequestParam Optional<Integer> book,
             @RequestParam Optional<Integer> chapter,
             @RequestParam Optional<Integer> paragraph,
-            @RequestParam Optional<String> keyword, // keyword 파라미터 추가
+            @RequestParam Optional<String> keyword,
             Model model) {
 
         Integer finalCate = cate.orElse(null);
