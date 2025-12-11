@@ -43,6 +43,6 @@ public class BibleController {
         model.addAttribute("selectedChapter", finalChapter);
         model.addAttribute("selectedParagraph", finalParagraph);
 
-        return "view"; // 성경 보기 화면 (view.html)
+        return "view";
     }
 }
