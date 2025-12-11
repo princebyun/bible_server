@@ -18,6 +18,9 @@
             <if test="paragraph != null">
                 AND paragraph = #{paragraph}
             </if>
+            <if test="keyword != null and keyword != ''">
+                AND sentence LIKE CONCAT('%', #{keyword}, '%')
+            </if>
         </where>
         ORDER BY seq
     </select>
