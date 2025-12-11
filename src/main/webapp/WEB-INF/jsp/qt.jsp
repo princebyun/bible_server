@@ -76,9 +76,11 @@
                 <button class="btn btn-primary btn-sm me-2" onclick="saveImage()">
                     <i class="fas fa-download"></i> 이미지로 저장하기
                 </button>
-                <button class="btn btn-kakao btn-sm" onclick="shareKakao()">
-                    <i class="fas fa-comment"></i> 카카오톡으로 공유하기
-                </button>
+                    <%-- 카카오톡 공유 버튼 주석 처리
+                    <button class="btn btn-kakao btn-sm" onclick="shareKakao()">
+                        <i class="fas fa-comment"></i> 카카오톡으로 공유하기
+                    </button>
+                    --%>
             </div>
         </c:otherwise>
     </c:choose>
