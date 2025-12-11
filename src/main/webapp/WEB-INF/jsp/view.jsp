@@ -8,8 +8,7 @@
     <title>성경 보기</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="<c:url value='/webjars/bootstrap/5.3.0/css/bootstrap.min.css'/>" rel="stylesheet">
-    <link href="<c:url value='/resources/css/menu.css'/>" rel="stylesheet">
-    <link href="<c:url value='/resources/css/view.css'/>" rel="stylesheet">
+    <link href="<c:url value='/resources/css/common.css'/>" rel="stylesheet">
 </head>
 <body>
 
@@ -17,7 +16,7 @@
 <%@ include file="menu.jsp" %>
 
 <div class="container mt-4">
-    <h1 class="mb-4">성경 보기</h1>
+    <h1 class="page-title">성경 보기</h1>
 
     <!-- 필터링 폼 -->
     <form id="filterForm" action="/bible" method="get" class="row g-3 align-items-end filter-form">
@@ -52,7 +51,6 @@
             <input type="number" id="paragraph" name="paragraph" class="form-control" value="${selectedParagraph}">
         </div>
         <div class="col-md-2">
-            <label class="form-label">&nbsp;</label>
             <button type="submit" class="btn btn-primary w-100">검색</button>
         </div>
     </form>
@@ -117,8 +115,6 @@
 <script src="<c:url value='/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js'/>"></script>
 <script>
     function submitFormOnChange() {
-        // '구분' 변경 시 '성경'과 '장'을 초기화하지 않고 폼을 제출하여
-        // 컨트롤러에서 '구분'에 맞는 '성경' 목록을 다시 로드하게 함
         document.getElementById('filterForm').submit();
     }
 </script>
