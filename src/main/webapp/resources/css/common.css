@@ -55,7 +55,6 @@ body {
     font-weight: 800; /* 활성 메뉴는 더 두껍게 */
 }
 
-
 /* 페이지 제목 */
 .page-title {
     font-weight: bold;
@@ -134,4 +133,18 @@ body {
 .bible-verse strong {
     margin-right: 1rem;
     color: #00BFFF; /* 강조 색상도 하늘색 계열로 변경 */
+}
+
+/* 모바일 환경 헤더 메뉴 간격 조정 */
+@media (max-width: 991px) {
+    .site-header .navbar-collapse {
+        padding-top: 15px; /* 메뉴 상단 여백 */
+    }
+    .site-header .nav-item {
+        margin: 8px 0; /* 각 메뉴의 상하 간격 추가 */
+    }
+    .site-header .nav-link {
+        display: block; /* 링크를 블록 요소로 만들어 전체 영역 클릭 가능하게 */
+        width: 100%;
+    }
 }
