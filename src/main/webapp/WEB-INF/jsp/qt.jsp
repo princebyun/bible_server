@@ -10,8 +10,24 @@
     <link href="<c:url value='/webjars/bootstrap/5.3.0/css/bootstrap.min.css'/>" rel="stylesheet">
     <link href="<c:url value='/resources/css/common.css'/>" rel="stylesheet">
     <link href="<c:url value='/resources/css/qt.css'/>" rel="stylesheet">
-    <!-- html2canvas 라이브러리 추가 -->
+    <!-- html2canvas 라이브러리 -->
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <!-- Kakao SDK (integrity 속성 제거) -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js" crossorigin="anonymous"></script>
+    <style>
+        /* 카카오 버튼 스타일 */
+        .btn-kakao {
+            background-color: #FEE500;
+            color: #000000;
+            border: none;
+            font-weight: bold;
+        }
+
+        .btn-kakao:hover {
+            background-color: #FDD835;
+            color: #000000;
+        }
+    </style>
 </head>
 <body>
 
@@ -22,14 +38,13 @@
     <c:choose>
         <c:when test="${not empty error}">
             <div class="alert alert-danger mt-4" role="alert">
-                ${error}
+                    ${error}
             </div>
         </c:when>
         <c:otherwise>
             <!-- 캡처 대상 영역에 ID 부여 -->
-            <div class="row g-3 h-100" id="capture-area"> <!-- g-3으로 간격 축소, h-100으로 높이 꽉 채움 -->
+            <div class="row g-3 h-100" id="capture-area">
                 <!-- 왼쪽: 큐티 본문 -->
-                <!-- col-lg-6 -> col-md-6 변경: 태블릿(768px 이상)에서도 2단 레이아웃 유지 -->
                 <div class="col-md-6 h-100">
                     <div class="qt-content-area">
                         <div class="qt-header">
@@ -40,7 +55,6 @@
                         <div class="qt-body">
                             <c:forEach var="verse" items="${verses}">
                                 <div class="verse">
-                                    <%-- HTML 태그가 그대로 렌더링되도록 escapeXml="false" 사용 --%>
                                     <p><c:out value="${verse}" escapeXml="false"/></p>
                                 </div>
                             </c:forEach>
@@ -49,7 +63,6 @@
                 </div>
 
                 <!-- 오른쪽: 묵상 노트 -->
-                <!-- col-lg-6 -> col-md-6 변경 -->
                 <div class="col-md-6 h-100">
                     <div class="qt-note-area">
                         <h2 class="note-title">나의 묵상</h2>
@@ -60,7 +73,12 @@
 
             <!-- 버튼 영역 -->
             <div class="btn-area text-end">
-                <button class="btn btn-primary btn-sm" onclick="saveAsImage()">이미지로 저장하기</button>
+                <button class="btn btn-primary btn-sm me-2" onclick="saveImage()">
+                    <i class="fas fa-download"></i> 이미지로 저장하기
+                </button>
+                <button class="btn btn-kakao btn-sm" onclick="shareKakao()">
+                    <i class="fas fa-comment"></i> 카카오톡으로 공유하기
+                </button>
             </div>
         </c:otherwise>
     </c:choose>
@@ -68,31 +86,82 @@
 
 <script src="<c:url value='/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js'/>"></script>
 <script>
-    function saveAsImage() {
+    // 카카오 SDK 초기화
+    try {
+        Kakao.init('58f34b0958d81c971284547077722431');
+    } catch (e) {
+        console.error("Kakao SDK 초기화 실패. 키를 확인하세요.");
+    }
+
+    // 공통 캡처 함수
+    function captureScreen() {
         const captureArea = document.getElementById("capture-area");
-
-        // html2canvas 옵션 설정
-        html2canvas(captureArea, {
-            scale: 2, // 해상도 2배 (선명하게)
-            backgroundColor: "#f0f8ff", // 배경색 지정 (투명 배경 방지)
+        return html2canvas(captureArea, {
+            scale: 2,
+            backgroundColor: "#f0f8ff",
             logging: false,
-            useCORS: true // 외부 이미지 사용 시 필요
-        }).then(canvas => {
-            // 캔버스를 이미지 URL로 변환
-            const image = canvas.toDataURL("image/png");
+            useCORS: true
+        });
+    }
 
-            // 다운로드 링크 생성
+    // 1. 이미지 저장 함수
+    function saveImage() {
+        captureScreen().then(canvas => {
+            const image = canvas.toDataURL("image/png");
             const link = document.createElement("a");
             link.href = image;
-            link.download = "오늘의큐티_" + new Date().toISOString().slice(0, 10) + ".png"; // 파일명 설정
-
-            // 링크 클릭하여 다운로드 실행
+            link.download = "오늘의큐티_" + new Date().toISOString().slice(0, 10) + ".png";
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
         }).catch(err => {
-            console.error("이미지 저장 중 오류 발생:", err);
+            console.error("이미지 저장 실패:", err);
             alert("이미지 저장에 실패했습니다.");
+        });
+    }
+
+    // 2. 카카오톡 공유 함수
+    function shareKakao() {
+        if (!Kakao.isInitialized()) {
+            alert('카카오 JavaScript 키가 설정되지 않았습니다. 코드를 확인해주세요.');
+            return;
+        }
+
+        captureScreen().then(canvas => {
+            canvas.toBlob(blob => {
+                const file = new File([blob], "qt_share.png", {type: "image/png"});
+
+                Kakao.Share.uploadImage({
+                    file: [file]
+                })
+                    .then(function (response) {
+                        const imageUrl = response.infos.original.url;
+                        const width = canvas.width;
+                        const height = canvas.height;
+
+                        Kakao.Share.sendDefault({
+                            objectType: 'feed',
+                            content: {
+                                title: '${title}',
+                                description: '${date} 묵상 나눔',
+                                imageUrl: imageUrl,
+                                imageWidth: width,
+                                imageHeight: height,
+                                link: {
+                                    mobileWebUrl: window.location.href,
+                                    webUrl: window.location.href
+                                }
+                            }
+                        });
+                    })
+                    .catch(function (error) {
+                        console.error('카카오 이미지 업로드 실패:', error);
+                        alert('카카오톡 공유에 실패했습니다.');
+                    });
+            });
+        }).catch(err => {
+            console.error("화면 캡처 실패:", err);
+            alert("화면 캡처에 실패했습니다.");
         });
     }
 </script>
