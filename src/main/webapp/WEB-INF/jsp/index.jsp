@@ -11,22 +11,23 @@
     <link href="<c:url value='/resources/css/main.css'/>" rel="stylesheet">
 </head>
 <body>
-    <!-- 공통 메뉴 삽입 -->
-    <%@ include file="menu.jsp" %>
+<!-- 공통 메뉴 삽입 -->
+<%@ include file="menu.jsp" %>
 
-    <div class="container main-container">
-        <h1 class="main-title">The Holy Bible</h1>
-        <p class="sub-title">당신의 삶에 말씀이 함께하기를</p>
+<div class="container main-container">
+    <h1 class="main-title">The Holy Bible</h1>
+    <p class="sub-title">당신의 삶에 말씀이 함께하기를</p>
 
-        <!-- 챗봇 스타일 검색창 -->
-        <div class="chat-search-container mt-5">
-            <form action="<c:url value='/bible'/>" method="get" class="d-flex align-items-center">
-                <input class="form-control me-2 flex-grow-1" type="search" name="keyword" placeholder="단어나 구절 입력 (예: 사랑)" aria-label="Search">
-                <button class="btn btn-outline-success text-nowrap" type="submit">검색</button>
-            </form>
-        </div>
+    <!-- 챗봇 스타일 검색창 -->
+    <div class="chat-search-container mt-5">
+        <form action="<c:url value='/bible'/>" method="get" class="d-flex align-items-center">
+            <input class="form-control me-2 flex-grow-1" type="search" name="keyword" placeholder="단어나 구절 입력 (예: 예수)"
+                   aria-label="Search">
+            <button class="btn btn-outline-success text-nowrap" type="submit">검색</button>
+        </form>
     </div>
+</div>
 
-    <script src="<c:url value='/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js'/>"></script>
+<script src="<c:url value='/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js'/>"></script>
 </body>
 </html>
