@@ -37,13 +37,13 @@
                 </div>
             </a>
 
-            <!-- 오늘의 말씀 카드 -->
-            <a href="#" class="custom-card">
+            <!-- 오늘의 큐티본문 카드 -->
+            <a href="<c:url value='/qt'/>" class="custom-card">
                 <div class="card-image-wrapper">
-                    <img src="<c:url value='/resources/images/card_today.png'/>" alt="오늘의 말씀">
+                    <img src="<c:url value='/resources/images/card_today.png'/>" alt="오늘의 큐티본문">
                 </div>
                 <div class="card-content">
-                    <div class="card-title">오늘의 말씀</div>
+                    <div class="card-title">오늘의 큐티본문</div>
                     <div class="card-desc">매일 주어지는 새로운<br>은혜의 말씀을 만나보세요.</div>
                 </div>
             </a>
