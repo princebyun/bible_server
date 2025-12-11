@@ -1,12 +1,11 @@
 package bible.bible.controller;
 
 import bible.bible.service.BibleService;
+import java.util.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.Optional;
 
 @Controller
 public class BibleController {
@@ -30,7 +29,6 @@ public class BibleController {
             @RequestParam Optional<Integer> paragraph,
             Model model) {
 
-        // 파라미터가 없으면 초기값 설정 (구약:1, 창세기:1, 1장)
         Integer finalCate = cate.orElse(1);
         Integer finalBook = book.orElse(1);
         Integer finalChapter = chapter.orElse(1);
@@ -40,7 +38,6 @@ public class BibleController {
         model.addAttribute("testaments", bibleService.getTestaments());
         model.addAttribute("books", bibleService.getBooks(finalCate));
 
-        // 필터 선택 값을 유지하기 위해 모델에 추가
         model.addAttribute("selectedCate", finalCate);
         model.addAttribute("selectedBook", finalBook);
         model.addAttribute("selectedChapter", finalChapter);
