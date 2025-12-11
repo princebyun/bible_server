@@ -13,7 +13,8 @@ public interface BibleMapper {
     List<Bible> findByFilter(@Param("cate") Integer cate,
                              @Param("book") Integer book,
                              @Param("chapter") Integer chapter,
-                             @Param("paragraph") Integer paragraph);
+                             @Param("paragraph") Integer paragraph,
+                             @Param("keyword") String keyword); // keyword 추가
 
     List<String> findDistinctTestaments();
 

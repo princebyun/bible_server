@@ -9,8 +9,8 @@ public class Bible {
     private int paragraph;
     private String sentence;
     private String testament;
-    private String long_label;
-    private String short_label;
+    private String longLabel;  // long_label -> longLabel 변경
+    private String shortLabel; // short_label -> shortLabel 변경
 
     // Getters and Setters
     public int getSeq() {
@@ -69,19 +69,19 @@ public class Bible {
         this.testament = testament;
     }
 
-    public String getLong_label() {
-        return long_label;
+    public String getLongLabel() {
+        return longLabel;
     }
 
-    public void setLong_label(String long_label) {
-        this.long_label = long_label;
+    public void setLongLabel(String longLabel) {
+        this.longLabel = longLabel;
     }
 
-    public String getShort_label() {
-        return short_label;
+    public String getShortLabel() {
+        return shortLabel;
     }
 
-    public void setShort_label(String short_label) {
-        this.short_label = short_label;
+    public void setShortLabel(String shortLabel) {
+        this.shortLabel = shortLabel;
     }
 }

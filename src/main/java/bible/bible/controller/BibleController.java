@@ -1,11 +1,12 @@
 package bible.bible.controller;
 
 import bible.bible.service.BibleService;
-import java.util.Optional;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Optional;
 
 @Controller
 public class BibleController {
@@ -18,7 +19,7 @@ public class BibleController {
 
     @GetMapping("/")
     public String home() {
-        return "index"; // 메인 화면 (index.html)
+        return "index"; // 메인 화면 (index.jsp)
     }
 
     @GetMapping("/bible")
@@ -27,22 +28,27 @@ public class BibleController {
             @RequestParam Optional<Integer> book,
             @RequestParam Optional<Integer> chapter,
             @RequestParam Optional<Integer> paragraph,
+            @RequestParam Optional<String> keyword, // keyword 파라미터 추가
             Model model) {
 
-        Integer finalCate = cate.orElse(1);
-        Integer finalBook = book.orElse(1);
-        Integer finalChapter = chapter.orElse(1);
-        Integer finalParagraph = paragraph.orElse(null); // 절은 선택 사항
+        // 파라미터가 없으면 초기값 설정
+        Integer finalCate = cate.orElse(null);
+        Integer finalBook = book.orElse(null);
+        Integer finalChapter = chapter.orElse(null);
+        Integer finalParagraph = paragraph.orElse(null);
+        String finalKeyword = keyword.orElse(null);
 
-        model.addAttribute("verses", bibleService.getBibleVerses(finalCate, finalBook, finalChapter, finalParagraph));
+        model.addAttribute("verses", bibleService.getBibleVerses(finalCate, finalBook, finalChapter, finalParagraph, finalKeyword));
         model.addAttribute("testaments", bibleService.getTestaments());
         model.addAttribute("books", bibleService.getBooks(finalCate));
 
+        // 필터 선택 값을 유지하기 위해 모델에 추가
         model.addAttribute("selectedCate", finalCate);
         model.addAttribute("selectedBook", finalBook);
         model.addAttribute("selectedChapter", finalChapter);
         model.addAttribute("selectedParagraph", finalParagraph);
+        model.addAttribute("selectedKeyword", finalKeyword); // keyword 값 유지
 
-        return "view";
+        return "view"; // 성경 보기 화면 (view.jsp)
     }
 }

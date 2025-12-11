@@ -16,8 +16,8 @@ public class BibleService {
         this.bibleMapper = bibleMapper;
     }
 
-    public List<Bible> getBibleVerses(Integer cate, Integer book, Integer chapter, Integer paragraph) {
-        return bibleMapper.findByFilter(cate, book, chapter, paragraph);
+    public List<Bible> getBibleVerses(Integer cate, Integer book, Integer chapter, Integer paragraph, String keyword) {
+        return bibleMapper.findByFilter(cate, book, chapter, paragraph, keyword);
     }
 
     public List<String> getTestaments() {

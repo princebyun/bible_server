@@ -21,6 +21,10 @@
 
     <!-- 필터링 폼 -->
     <form id="filterForm" action="/bible" method="get" class="row g-3 align-items-end filter-form">
+        <div class="col-md-3">
+            <label for="keyword" class="form-label">단어 검색</label>
+            <input type="text" id="keyword" name="keyword" class="form-control" value="${selectedKeyword}" placeholder="예: 사랑">
+        </div>
         <div class="col-md-2">
             <label for="cate" class="form-label">구분</label>
             <select id="cate" name="cate" class="form-select" onchange="submitFormOnChange()">
@@ -30,7 +34,7 @@
                 </c:forEach>
             </select>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <label for="book" class="form-label">성경</label>
             <select id="book" name="book" class="form-select">
                 <option value="">전체</option>
@@ -43,30 +47,69 @@
             <label for="chapter" class="form-label">장</label>
             <input type="number" id="chapter" name="chapter" class="form-control" value="${selectedChapter}">
         </div>
-        <div class="col-md-2">
+        <div class="col-md-1">
             <label for="paragraph" class="form-label">절</label>
             <input type="number" id="paragraph" name="paragraph" class="form-control" value="${selectedParagraph}">
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
+            <label class="form-label">&nbsp;</label>
             <button type="submit" class="btn btn-primary w-100">검색</button>
         </div>
     </form>
 
-    <!-- 성경 구절 목록 -->
+    <!-- 성경 구절 목록 (아코디언 적용) -->
     <div id="bible-content">
         <c:if test="${empty verses}">
             <div class="alert alert-info">
                 검색 결과가 없습니다.
             </div>
         </c:if>
-        <c:forEach var="verse" items="${verses}">
-            <div class="bible-verse">
-                <p>
-                    <strong>${verse.long_label} ${verse.chapter}:${verse.paragraph}</strong>
-                    <span>${verse.sentence}</span>
-                </p>
+
+        <c:if test="${not empty verses}">
+            <div class="accordion" id="bibleAccordion">
+                <c:set var="currentBook" value="-1" />
+                <c:forEach var="verse" items="${verses}" varStatus="status">
+
+                    <%-- 책이 바뀌면 새로운 아코디언 아이템 시작 --%>
+                    <c:if test="${verse.book != currentBook}">
+                        <%-- 첫 번째 아이템이 아니면 이전 그룹을 닫아줌 --%>
+                        <c:if test="${currentBook != -1}">
+                                </div>
+                            </div>
+                        </div>
+                        </c:if>
+
+                        <%-- 새로운 아코디언 아이템 헤더 --%>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading${verse.book}">
+                                <button class="accordion-button ${selectedBook != null ? '' : 'collapsed'}" type="button" data-bs-toggle="collapse" data-bs-target="#collapse${verse.book}" aria-expanded="${selectedBook != null ? 'true' : 'false'}" aria-controls="collapse${verse.book}">
+                                    ${verse.longLabel}
+                                </button>
+                            </h2>
+                            <%-- 특정 성경을 선택했을 때는 펼쳐서 보여줌 --%>
+                            <div id="collapse${verse.book}" class="accordion-collapse collapse ${selectedBook != null ? 'show' : ''}" aria-labelledby="heading${verse.book}">
+                                <div class="accordion-body">
+
+                        <c:set var="currentBook" value="${verse.book}" />
+                    </c:if>
+
+                    <%-- 구절 내용 --%>
+                    <div class="bible-verse">
+                        <p>
+                            <strong>${verse.chapter}:${verse.paragraph}</strong>
+                            <span>${verse.sentence}</span>
+                        </p>
+                    </div>
+
+                    <%-- 리스트의 마지막이면 태그를 닫아줌 --%>
+                    <c:if test="${status.last}">
+                            </div>
+                        </div>
+                    </div>
+                    </c:if>
+                </c:forEach>
             </div>
-        </c:forEach>
+        </c:if>
     </div>
 
 </div>
