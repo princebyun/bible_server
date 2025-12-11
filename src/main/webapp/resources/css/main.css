@@ -21,3 +21,36 @@ body {
     color: #6c5b53;
     margin-top: 10px;
 }
+
+/* 챗봇 스타일 검색창 컨테이너 */
+.chat-search-container {
+    width: 100%;
+    max-width: 600px; /* 검색창 최대 너비 */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.7); /* 반투명 흰색 배경 */
+    border-radius: 20px; /* 둥근 모서리 */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* 검색창 입력 필드 */
+.chat-search-container .form-control {
+    border-radius: 20px; /* 둥근 모서리 */
+    border: none;
+    padding: 10px 20px;
+    font-size: 1.1rem;
+}
+.chat-search-container .form-control:focus {
+    box-shadow: 0 0 0 0.25rem rgba(121, 85, 72, 0.25); /* 포커스 시 갈색 톤 그림자 */
+}
+
+/* 검색 버튼 */
+.chat-search-container .btn {
+    border-radius: 20px; /* 둥근 모서리 */
+    background-color: #795548; /* 네비게이션 바와 동일한 갈색 */
+    color: white;
+    border: none;
+    min-width: 80px; /* 버튼의 최소 너비 지정 */
+}
+.chat-search-container .btn:hover {
+    background-color: #5d4037;
+}
