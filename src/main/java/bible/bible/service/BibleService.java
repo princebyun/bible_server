@@ -27,4 +27,11 @@ public class BibleService {
     public List<BookInfo> getBooks(Integer cate) {
         return bibleMapper.findDistinctBooks(cate);
     }
+
+    public Integer getMaxChapter(Integer book) {
+        if (book == null || book <= 0) {
+            return 0;
+        }
+        return bibleMapper.findMaxChapterByBook(book);
+    }
 }
