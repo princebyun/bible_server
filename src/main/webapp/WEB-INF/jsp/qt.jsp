@@ -100,7 +100,31 @@
             scale: 2,
             backgroundColor: "#f0f8ff",
             logging: false,
-            useCORS: true
+            useCORS: true,
+            onclone: (clonedDoc) => {
+                // 복제된 DOM에서 textarea를 찾아 div로 변환 (줄바꿈 유지)
+                const textareas = clonedDoc.querySelectorAll('.note-textarea');
+                textareas.forEach(textarea => {
+                    const div = clonedDoc.createElement('div');
+
+                    // 원본 textarea의 클래스와 스타일을 최대한 유지
+                    div.className = textarea.className;
+                    div.style.whiteSpace = 'pre-wrap'; // 줄바꿈과 공백을 유지
+                    div.style.height = 'auto';         // 내용에 따라 높이 자동 조절
+                    div.style.overflow = 'visible';    // 내용이 잘리지 않도록
+                    div.style.resize = 'none';         // 리사이즈 핸들 제거
+                    div.style.border = 'none';         // 테두리 제거 (필요시)
+
+                    // placeholder가 보이지 않도록
+                    div.removeAttribute('placeholder');
+
+                    // 내용을 그대로 복사
+                    div.innerText = textarea.value;
+
+                    // 복제된 DOM에서 textarea를 생성한 div로 교체
+                    textarea.parentNode.replaceChild(div, textarea);
+                });
+            }
         });
     }
 
