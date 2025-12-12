@@ -27,16 +27,16 @@
         <div class="col-md-2">
             <label for="cate" class="form-label">구분</label>
             <select id="cate" name="cate" class="form-select" onchange="submitFormOnChange()">
-                <option value="">전체</option>
+                <option value="0" ${selectedCate == null ? 'selected' : ''}>전체</option>
                 <c:forEach var="t" items="${testaments}" varStatus="status">
                     <option value="${status.index + 1}" ${selectedCate != null && selectedCate == status.index + 1 ? 'selected' : ''}>${t}</option>
                 </c:forEach>
             </select>
         </div>
-        <div class="col-md-2">
+        <div class="col-md-3">
             <label for="book" class="form-label">성경</label>
             <select id="book" name="book" class="form-select">
-                <option value="">전체</option>
+                <option value="0" ${selectedBook == null ? 'selected' : ''}>전체</option>
                 <c:forEach var="b" items="${books}">
                     <option value="${b.book}" ${selectedBook != null && selectedBook == b.book ? 'selected' : ''}>${b.longLabel}</option>
                 </c:forEach>
@@ -44,14 +44,17 @@
         </div>
         <div class="col-md-2">
             <label for="chapter" class="form-label">장</label>
-            <input type="number" id="chapter" name="chapter" class="form-control" value="${selectedChapter}">
-        </div>
-        <div class="col-md-1">
-            <label for="paragraph" class="form-label">절</label>
-            <input type="number" id="paragraph" name="paragraph" class="form-control" value="${selectedParagraph}">
+            <select id="chapter" name="chapter" class="form-select">
+                <option value="0" ${selectedChapter == null ? 'selected' : ''}>전체</option>
+                <c:if test="${maxChapter > 0}">
+                    <c:forEach var="i" begin="1" end="${maxChapter}">
+                        <option value="${i}" ${selectedChapter != null && selectedChapter == i ? 'selected' : ''}>${i}장</option>
+                    </c:forEach>
+                </c:if>
+            </select>
         </div>
         <div class="col-md-2">
-            <button type="submit" class="btn btn-primary w-100">검색</button>
+            <button type="submit" class="btn btn-primary w-100 mt-4">검색</button>
         </div>
     </form>
 
@@ -114,6 +117,31 @@
 
 <script src="<c:url value='/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js'/>"></script>
 <script>
+    document.getElementById('book').addEventListener('change', function() {
+        const bookId = this.value;
+        const chapterSelect = document.getElementById('chapter');
+
+        // 기존 옵션 초기화 (첫 번째 '전체' 옵션 제외)
+        while (chapterSelect.options.length > 1) {
+            chapterSelect.remove(1);
+        }
+
+        if (bookId && bookId > 0) {
+            fetch(`/api/chapters?book=${bookId}`)
+                .then(response => response.json())
+                .then(data => {
+                    const maxChapter = data.maxChapter;
+                    for (let i = 1; i <= maxChapter; i++) {
+                        const option = document.createElement('option');
+                        option.value = i;
+                        option.textContent = i + '장';
+                        chapterSelect.appendChild(option);
+                    }
+                })
+                .catch(error => console.error('Error fetching chapters:', error));
+        }
+    });
+
     function submitFormOnChange() {
         document.getElementById('filterForm').submit();
     }

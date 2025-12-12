@@ -44,4 +44,10 @@
         ORDER BY book
     </select>
 
+    <select id="findMaxChapterByBook" resultType="java.lang.Integer">
+        SELECT MAX(chapter)
+        FROM BIBLE
+        WHERE book = #{book}
+    </select>
+
 </mapper>

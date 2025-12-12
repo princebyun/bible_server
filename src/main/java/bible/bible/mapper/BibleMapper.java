@@ -14,9 +14,11 @@ public interface BibleMapper {
                              @Param("book") Integer book,
                              @Param("chapter") Integer chapter,
                              @Param("paragraph") Integer paragraph,
-                             @Param("keyword") String keyword); // keyword 추가
+                             @Param("keyword") String keyword);
 
     List<String> findDistinctTestaments();
 
     List<BookInfo> findDistinctBooks(@Param("cate") Integer cate);
+
+    Integer findMaxChapterByBook(@Param("book") Integer book);
 }
