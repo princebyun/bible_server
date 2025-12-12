@@ -120,7 +120,7 @@
         });
     }
 
-    // html2canvas 등으로 캡처된 canvas가 있다고 가정
+    /*// html2canvas 등으로 캡처된 canvas가 있다고 가정
     function shareCapturedImage(canvas) {
         // 1. Canvas를 Blob(파일 데이터)으로 변환
         canvas.toBlob(function (blob) {
@@ -152,7 +152,7 @@
                     console.error('이미지 업로드 실패:', error);
                 });
         });
-    }
+    }*/
 
     // 2. 카카오톡 공유 함수
     function shareKakao() {
@@ -162,37 +162,28 @@
         }
 
         captureScreen().then(canvas => {
-            shareCapturedImage(canvas);
-            /* canvas.toBlob(blob => {
-                 const file = new File([blob], "qt_share.png", {type: "image/png"});
+            canvas.toBlob(blob => {
+                const file = new File([blob], "qt_share.png", {type: "image/png"});
 
-                 Kakao.Share.uploadImage({
-                     file: [file]
-                 })
-                     .then(function (response) {
-                         const imageUrl = response.infos.original.url;
-                         const width = canvas.width;
-                         const height = canvas.height;
+                Kakao.Share.uploadImage({
+                    file: [file]
+                })
+                    .then(function (response) {
+                        const imageUrl = response.infos.original.url;
+                        const width = canvas.width;
+                        const height = canvas.height;
 
-                         Kakao.Share.sendDefault({
-                             objectType: 'feed',
-                             content: {
-                                 title: '
-
-
-
-            ${title}',
-                                description: '
-
-
-
-            ${date} 묵상 나눔',
+                        Kakao.Share.sendDefault({
+                            objectType: 'feed',
+                            content: {
+                                title: '${title}',
+                                description: '${date} 묵상 나눔',
                                 imageUrl: imageUrl,
                                 imageWidth: width,
                                 imageHeight: height,
                                 link: {
-                                    mobileWebUrl: window.location.href,
-                                    webUrl: window.location.href
+                                    mobileWebUrl: imageUrl,
+                                    webUrl: imageUrl
                                 }
                             }
                         });
@@ -201,7 +192,7 @@
                         console.error('카카오 이미지 업로드 실패:', error);
                         alert('카카오톡 공유에 실패했습니다.');
                     });
-            });*/
+            });
         }).catch(err => {
             console.error("화면 캡처 실패:", err);
             alert("화면 캡처에 실패했습니다.");
