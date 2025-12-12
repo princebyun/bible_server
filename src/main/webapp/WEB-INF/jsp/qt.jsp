@@ -76,11 +76,9 @@
                 <button class="btn btn-primary btn-sm me-2" onclick="saveImage()">
                     <i class="fas fa-download"></i> 이미지로 저장하기
                 </button>
-                    <%-- 카카오톡 공유 버튼 주석 처리
-                    <button class="btn btn-kakao btn-sm" onclick="shareKakao()">
-                        <i class="fas fa-comment"></i> 카카오톡으로 공유하기
-                    </button>
-                    --%>
+                <button class="btn btn-kakao btn-sm" onclick="shareKakao()">
+                    <i class="fas fa-comment"></i> 카카오톡으로 공유하기
+                </button>
             </div>
         </c:otherwise>
     </c:choose>
@@ -122,6 +120,40 @@
         });
     }
 
+    // html2canvas 등으로 캡처된 canvas가 있다고 가정
+    function shareCapturedImage(canvas) {
+        // 1. Canvas를 Blob(파일 데이터)으로 변환
+        canvas.toBlob(function (blob) {
+            // 2. File 객체 생성 (카카오 API는 FileList나 File 배열을 받습니다)
+            const file = new File([blob], "capture.png", {type: "image/png"});
+            // 3. 카카오 서버로 이미지 업로드
+            Kakao.Share.uploadImage({
+                file: [file] // 배열 형태로 전달
+            })
+                .then(function (response) {
+                    // 4. 업로드된 이미지 URL 획득
+                    const imageUrl = response.infos.original.url;
+
+                    // 5. 해당 URL을 사용하여 카카오톡 공유
+                    Kakao.Share.sendDefault({
+                        objectType: 'feed',
+                        content: {
+                            title: '캡처 이미지 공유',
+                            description: '웹페이지에서 캡처된 화면입니다.',
+                            imageUrl: imageUrl, // 카카오 서버에 저장된 URL 사용
+                            link: {
+                                mobileWebUrl: window.location.href,
+                                webUrl: window.location.href
+                            },
+                        },
+                    });
+                })
+                .catch(function (error) {
+                    console.error('이미지 업로드 실패:', error);
+                });
+        });
+    }
+
     // 2. 카카오톡 공유 함수
     function shareKakao() {
         if (!Kakao.isInitialized()) {
@@ -130,22 +162,31 @@
         }
 
         captureScreen().then(canvas => {
-            canvas.toBlob(blob => {
-                const file = new File([blob], "qt_share.png", {type: "image/png"});
+            shareCapturedImage(canvas);
+            /* canvas.toBlob(blob => {
+                 const file = new File([blob], "qt_share.png", {type: "image/png"});
 
-                Kakao.Share.uploadImage({
-                    file: [file]
-                })
-                    .then(function (response) {
-                        const imageUrl = response.infos.original.url;
-                        const width = canvas.width;
-                        const height = canvas.height;
+                 Kakao.Share.uploadImage({
+                     file: [file]
+                 })
+                     .then(function (response) {
+                         const imageUrl = response.infos.original.url;
+                         const width = canvas.width;
+                         const height = canvas.height;
 
-                        Kakao.Share.sendDefault({
-                            objectType: 'feed',
-                            content: {
-                                title: '${title}',
-                                description: '${date} 묵상 나눔',
+                         Kakao.Share.sendDefault({
+                             objectType: 'feed',
+                             content: {
+                                 title: '
+
+
+
+            ${title}',
+                                description: '
+
+
+
+            ${date} 묵상 나눔',
                                 imageUrl: imageUrl,
                                 imageWidth: width,
                                 imageHeight: height,
@@ -160,7 +201,7 @@
                         console.error('카카오 이미지 업로드 실패:', error);
                         alert('카카오톡 공유에 실패했습니다.');
                     });
-            });
+            });*/
         }).catch(err => {
             console.error("화면 캡처 실패:", err);
             alert("화면 캡처에 실패했습니다.");
