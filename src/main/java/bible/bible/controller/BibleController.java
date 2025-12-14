@@ -55,7 +55,7 @@ public class BibleController {
                 bibleService.getBibleVerses(finalCate, finalBook, finalChapter, null, finalKeyword));
         model.addAttribute("testaments", bibleService.getTestaments());
         model.addAttribute("books", bibleService.getBooks(finalCate));
-        
+
         // 선택된 책의 최대 장 수를 모델에 추가 (JSP에서 장 드롭다운을 만들기 위해)
         if (finalBook != null) {
             model.addAttribute("maxChapter", bibleService.getMaxChapter(finalBook));
