@@ -18,7 +18,7 @@
 
 <div class="main-content">
     <div class="search-wrapper">
-        <h1 class="main-title">어떤 말씀을 찾고 계신가요?</h1>
+        <h1 class="main-title">어떤 말씀을 찾고 계신가요??</h1>
         <form action="<c:url value='/bible'/>" method="get" class="search-form">
             <i class="fas fa-search search-icon"></i>
             <input class="search-input" type="search" name="keyword" placeholder="성경 구절이나 단어를 검색해보세요..."
