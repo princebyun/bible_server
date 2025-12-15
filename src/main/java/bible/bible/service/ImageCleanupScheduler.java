@@ -22,7 +22,6 @@ public class ImageCleanupScheduler {
     }
 
     @Scheduled(cron = "0 0 1 * * ?") // 매일 새벽 1시에 실행
-    //@Scheduled(cron = "0 0/1 * * * ?") //1분마다 실행.
     public void cleanupImageDirectory() {
         logger.info("Running image cleanup job...");
         if (Files.exists(uploadPath)) {

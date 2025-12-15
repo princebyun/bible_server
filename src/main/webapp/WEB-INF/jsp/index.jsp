@@ -49,14 +49,14 @@
             </div>
         </a>
 
-        <!-- 기도 노트 카드 -->
-        <a href="#" class="custom-card">
+        <!-- 주일말씀 카드 -->
+        <a href="<c:url value='/sermons'/>" class="custom-card">
             <div class="card-image-wrapper">
-                <img src="<c:url value='/resources/images/card_pray.png'/>" alt="기도 노트">
+                <img src="<c:url value='/resources/images/card_pray.png'/>" alt="주일말씀">
             </div>
             <div class="card-content">
-                <div class="card-title">기도 노트</div>
-                <div class="card-desc">나만의 기도 제목을 기록하고<br>응답의 순간을 간직하세요.</div>
+                <div class="card-title">주일말씀</div>
+                <div class="card-desc">지난 주일의 은혜로운<br>말씀을 다시 만나보세요.</div>
             </div>
         </a>
     </div>
