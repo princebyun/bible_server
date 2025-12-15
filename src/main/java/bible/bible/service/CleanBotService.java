@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Base64;
 import java.util.List;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
@@ -17,7 +18,8 @@ public class CleanBotService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
-    private final String API_KEY = "AIzaSyCuZg02VQ83TaRtmqH3Tah_ic_cx_uv5d0";
+    @Value("${gemini.api.key}")
+    private String apiKey;
 
     public CleanBotService(RestTemplate restTemplate, ObjectMapper objectMapper) {
         this.restTemplate = restTemplate;
@@ -27,7 +29,7 @@ public class CleanBotService {
     public CleanBotResult checkContent(String userText) {
         // 모델명: Gemini 2.5 Flash
         String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key="
-                + API_KEY;
+                + apiKey;
 
         String prompt = "너는 게시판 관리자야. 다음 텍스트를 분석해.\n" +
                 "텍스트: \"" + userText + "\"\n" +
@@ -60,7 +62,7 @@ public class CleanBotService {
 
     public CleanBotResult checkImage(MultipartFile file) {
         String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key="
-                + API_KEY;
+                + apiKey;
 
         try {
             String base64Image = Base64.getEncoder().encodeToString(file.getBytes());
