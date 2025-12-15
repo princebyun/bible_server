@@ -4,9 +4,12 @@ import bible.bible.domain.CleanBotResult;
 import bible.bible.domain.Gemini.GeminiRequest;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.Base64;
+import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class CleanBotService {
@@ -51,6 +54,41 @@ public class CleanBotService {
         } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("알 수 없는 오류: " + e.getMessage());
+        }
+    }
+
+
+    public CleanBotResult checkImage(MultipartFile file) {
+        String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key="
+                + API_KEY;
+
+        try {
+            String base64Image = Base64.getEncoder().encodeToString(file.getBytes());
+            String mimeType = file.getContentType();
+
+            String promptText = "이 이미지가 게시판에 올리기에 안전한지 분석해. " +
+                    "선정적이거나 폭력적이거나 혐오스러운 요소가 있는지 확인해. " +
+                    "결과는 무조건 JSON { \"isSafe\": boolean, \"reason\": string } 으로 답해.";
+
+            GeminiRequest request = new GeminiRequest();
+
+            GeminiRequest.Part textPart = new GeminiRequest.Part(promptText);
+            GeminiRequest.Part imagePart = new GeminiRequest.Part(new GeminiRequest.InlineData(mimeType, base64Image));
+
+            GeminiRequest.Content content = new GeminiRequest.Content(List.of(textPart, imagePart));
+
+            request.setContents(List.of(content));
+
+            String responseString = restTemplate.postForObject(url, request, String.class);
+
+            JsonNode root = objectMapper.readTree(responseString);
+            String text = root.path("candidates").get(0).path("content").path("parts").get(0).path("text").asText();
+            text = text.replace("```json", "").replace("```", "").trim();
+            return objectMapper.readValue(text, CleanBotResult.class);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("이미지 분석 실패: " + e.getMessage());
         }
     }
 }
