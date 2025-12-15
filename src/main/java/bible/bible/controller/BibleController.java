@@ -42,7 +42,7 @@ public class BibleController {
         if (isInitialLoad) {
             finalCate = 1;
             finalBook = 1;
-            finalChapter = null; // 초기값을 null(전체)로 변경
+            finalChapter = 1; // 초기값을 1(1장)로 변경
             finalKeyword = null;
         } else {
             finalCate = cate.filter(c -> c > 0).orElse(null);
