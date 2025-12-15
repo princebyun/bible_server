@@ -59,6 +59,28 @@
                 <div class="card-desc">지난 주일의 은혜로운<br>말씀을 다시 만나보세요.</div>
             </div>
         </a>
+
+        <!-- 클린챗 검사 카드 -->
+        <a href="<c:url value='/cleanbot/chat'/>" class="custom-card">
+            <div class="card-image-wrapper">
+                <img src="<c:url value='/resources/images/card_chat.png'/>" alt="클린챗 검사">
+            </div>
+            <div class="card-content">
+                <div class="card-title">클린챗 검사</div>
+                <div class="card-desc">텍스트의 유해성을<br>검사합니다.</div>
+            </div>
+        </a>
+
+        <!-- 클린이미지 검사 카드 -->
+        <a href="<c:url value='/cleanbot/image'/>" class="custom-card">
+            <div class="card-image-wrapper">
+                <img src="<c:url value='/resources/images/card_image.png'/>" alt="클린이미지 검사">
+            </div>
+            <div class="card-content">
+                <div class="card-title">클린이미지 검사</div>
+                <div class="card-desc">이미지의 유해성을<br>검사합니다.</div>
+            </div>
+        </a>
     </div>
 </div>
 

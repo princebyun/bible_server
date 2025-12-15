@@ -21,6 +21,15 @@
                     <li class="nav-item">
                         <a class="nav-link" href="<c:url value='/sermons'/>">주일말씀</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            클린봇
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" href="<c:url value='/cleanbot/chat'/>">클린챗 검사</a></li>
+                            <li><a class="dropdown-item" href="<c:url value='/cleanbot/image'/>">클린이미지 검사</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </div>
