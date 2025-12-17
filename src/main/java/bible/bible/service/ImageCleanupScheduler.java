@@ -8,7 +8,6 @@ import java.nio.file.Paths;
 import javax.servlet.ServletContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -21,7 +20,7 @@ public class ImageCleanupScheduler {
         this.uploadPath = Paths.get(servletContext.getRealPath("/share/")).normalize();
     }
 
-    @Scheduled(cron = "0 0 1 * * ?") // 매일 새벽 1시에 실행
+    //@Scheduled(cron = "0 0 1 * * ?") // 매일 새벽 1시에 실행
     public void cleanupImageDirectory() {
         logger.info("Running image cleanup job...");
         if (Files.exists(uploadPath)) {

@@ -15,6 +15,7 @@
             align-items: center;
             background-color: #f0f0f0;
         }
+
         img {
             max-width: 100%;
             max-height: 100%;
@@ -23,6 +24,7 @@
     </style>
 </head>
 <body>
-    <img src="<c:url value='/share/${requestScope["javax.servlet.forward.servlet_path"].substring(12)}'/>" alt="공유된 큐티 이미지">
+<img src="<c:url value='/share/${requestScope["javax.servlet.forward.servlet_path"].substring(12)}'/>"
+     alt="매일 새벽1시에 이미지를 삭제합니다.">
 </body>
 </html>

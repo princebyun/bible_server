@@ -38,7 +38,7 @@ body {
     text-align: center;
     padding: 20px;
     width: 100%;
-    overflow-x: hidden; /* 가로 스크롤바 숨김 */
+    overflow-x: hidden;
 }
 
 .search-wrapper {
@@ -83,12 +83,30 @@ body {
     color: #888;
 }
 
+/* --- Slider Styles --- */
+.slider-container {
+    position: relative;
+    width: 100%;
+    max-width: 1050px; /* 3 cards (320*3 + 30*2) */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.card-wrapper {
+    width: 100%;
+    overflow-x: hidden; /* 데스크탑/태블릿: 스크롤바 숨김 (JS로 제어) */
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px 0;
+}
+
 .card-container {
     display: flex;
-    justify-content: center;
     gap: 30px;
-    flex-wrap: wrap;
-    width: 100%;
+    width: max-content;
+    flex-wrap: nowrap;
+    padding: 0 5px;
 }
 
 .custom-card {
@@ -102,7 +120,7 @@ body {
     color: #333;
     display: flex;
     flex-direction: column;
-    flex-shrink: 0; /* 모바일에서 카드 크기 유지 */
+    flex-shrink: 0;
 }
 
 .custom-card:hover {
@@ -144,31 +162,68 @@ body {
     line-height: 1.5;
 }
 
-/* 모바일 환경 (가로 767px 이하) */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 24px;
+    color: #333;
+    cursor: pointer;
+    z-index: 20;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    transition: background-color 0.2s, opacity 0.3s, visibility 0.3s;
+    opacity: 0;
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-btn:hover {
+    background-color: white;
+}
+
+.slider-btn.prev { left: -25px; }
+.slider-btn.next { right: -25px; }
+
+.slider-container:hover .slider-btn {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Tablet (768px ~ 1100px) */
+@media (max-width: 1100px) and (min-width: 768px) {
+    .slider-container {
+        max-width: 690px; /* 2 cards (300*2 + 30*1) + 여유 */
+    }
+    .custom-card { width: 300px; }
+
+    /* 태블릿에서도 버튼 보이게 유지 */
+    .slider-btn { display: flex; }
+}
+
+/* Mobile ( ~ 767px) */
 @media (max-width: 767px) {
-    .main-title {
-        font-size: 2rem;
+    .main-title { font-size: 2rem; }
+    .search-wrapper { margin-bottom: 40px; }
+    .slider-container { max-width: 100%; padding: 0 20px; }
+
+    .card-wrapper {
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
     }
-    .search-wrapper {
-        margin-bottom: 40px;
-    }
-    .card-container {
-        flex-wrap: nowrap; /* 카드 줄바꿈 방지 */
-        justify-content: flex-start; /* 왼쪽부터 정렬 */
-        overflow-x: auto; /* 가로 스크롤 활성화 */
-        -webkit-overflow-scrolling: touch; /* 부드러운 스크롤 */
-        padding: 0 20px 20px 20px; /* 좌우, 하단 여백 */
-        gap: 20px; /* 카드 간격 조정 */
-    }
-    /* 스크롤바 숨기기 */
-    .card-container::-webkit-scrollbar {
-        display: none;
-    }
-    .card-container {
-        -ms-overflow-style: none;  /* IE and Edge */
-        scrollbar-width: none;  /* Firefox */
-    }
+    .card-wrapper::-webkit-scrollbar { display: none; }
+    .card-wrapper { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .card-container { gap: 20px; }
     .custom-card {
-        width: 280px; /* 모바일에서 카드 너비 살짝 줄임 */
+        width: 280px;
+        scroll-snap-align: start;
     }
+    .slider-btn { display: none !important; }
 }
