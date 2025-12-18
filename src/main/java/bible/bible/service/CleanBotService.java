@@ -49,6 +49,7 @@ public class CleanBotService {
     public CleanBotResult checkImage(MultipartFile file) {
 
         String url = "http://129.154.53.65:11434/api/chat";
+        
         try {
             String base64Image = Base64.getEncoder().encodeToString(file.getBytes());
             String promptText = "이 이미지가 게시판에 올리기에 안전한지 분석해. " +
