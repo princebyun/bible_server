@@ -49,12 +49,13 @@ public class CleanBotService {
     public CleanBotResult checkImage(MultipartFile file) {
 
         String url = "http://129.154.53.65:11434/api/chat";
-        
+
         try {
             String base64Image = Base64.getEncoder().encodeToString(file.getBytes());
-            String promptText = "이 이미지가 게시판에 올리기에 안전한지 분석해. " +
-                    "선정적이거나 폭력적이거나 혐오스러운 요소가 있는지 확인해. " +
-                    "결과는 무조건 JSON { \"isSafe\": boolean, \"reason\": string } 으로 답해.";
+            // 모델이 JSON 생성에 집중하도록 프롬프트를 간결하게 수정
+            String promptText = "이미지를 분석하고 유해성을 판단해. 기준: 선정적, 폭력적, 혐오스러움, 피, 공포. " +
+                    "유해 요소가 있으면 isSafe를 false로, 없으면 true로 설정해. " +
+                    "reason 필드에는 판단 이유를 한글로 작성해.";
 
             Message message = new Message("user", promptText, Collections.singletonList(base64Image));
 
@@ -64,11 +65,19 @@ public class CleanBotService {
             JsonNode root = objectMapper.readTree(responseString);
             String content = root.path("message").path("content").asText();
 
-            return objectMapper.readValue(content, CleanBotResult.class);
+            // 모델 응답에서 JSON 객체 부분만 정확히 추출하도록 로직 강화
+            String jsonContent = content;
+            int firstBrace = jsonContent.indexOf('{');
+            int lastBrace = jsonContent.lastIndexOf('}');
+            if (firstBrace != -1 && lastBrace != -1 && lastBrace > firstBrace) {
+                jsonContent = jsonContent.substring(firstBrace, lastBrace + 1);
+            }
+
+            return objectMapper.readValue(jsonContent, CleanBotResult.class);
 
         } catch (Exception e) {
             e.printStackTrace();
-            throw new RuntimeException("moondream 이미지 분석 실패: " + e.getMessage());
+            throw new RuntimeException("moondream 이미지 분석 실패: " + e.getMessage(), e);
         }
     }
 }
