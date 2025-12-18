@@ -46,16 +46,14 @@ public class CleanBotService {
         }
     }
 
-
     public CleanBotResult checkImage(MultipartFile file) {
 
         String url = "http://129.154.53.65:11434/api/chat";
         try {
             String base64Image = Base64.getEncoder().encodeToString(file.getBytes());
-            String promptText = "이 이미지가 게시판에 올리기에 안전한지 분석해.\n" +
-                    "nudity, naked,blood, violence, sexual, weapon같은 요소들이 있는지 판단해서 안전한지 결과를 알려줘.\n" +
-                    "결과는 무조건 JSON { \"isSafe\": boolean, \"reason\": string } 으로 답해.\n" +
-                    "reason은 한국어로만 대답해.";
+            String promptText = "이 이미지가 게시판에 올리기에 안전한지 분석해. " +
+                    "선정적이거나 폭력적이거나 혐오스러운 요소가 있는지 확인해. " +
+                    "결과는 무조건 JSON { \"isSafe\": boolean, \"reason\": string } 으로 답해.";
 
             Message message = new Message("user", promptText, Collections.singletonList(base64Image));
 
