@@ -20,7 +20,7 @@ public class CleanBotController {
         this.cleanBotService = cleanBotService;
     }
 
-    // --- 화면 이동 ---
+    // --- 화면 이동 --
 
     @GetMapping("/cleanbot/chat")
     public String chatPage() {
