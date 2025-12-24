@@ -9,8 +9,8 @@ public class Bible {
     private int paragraph;
     private String sentence;
     private String testament;
-    private String longLabel;  // long_label -> longLabel 변경
-    private String shortLabel; // short_label -> shortLabel 변경
+    private String longLabel;
+    private String shortLabel;
 
     // Getters and Setters
     public int getSeq() {

@@ -147,84 +147,81 @@
 
     // 2. 카카오톡 공유 함수 (서버 업로드 + 카카오 업로드)
     function shareKakao() {
-        if (confirm("공유된 이미지는 매일 새벽1시에 삭제되어 새벽1시 이후에는 확인할수 없습니다.공유하시겠습니까?")) {
-            if (!Kakao.isInitialized()) {
-                alert('카카오 JavaScript 키가 설정되지 않았습니다. 코드를 확인해주세요.');
-                return;
-            }
-
-            captureScreen().then(canvas => {
-                // 1. 우리 서버 업로드용 데이터 (Base64 String)
-                const imageDataUrl = canvas.toDataURL('image/png');
-
-                // 2. 카카오 서버 업로드용 데이터 (File Object)
-                canvas.toBlob(blob => {
-                    const file = new File([blob], "qt_share.png", {type: "image/png"});
-
-                    // 두 업로드 작업을 병렬로 처리
-                    Promise.all([
-                        // A. 우리 서버에 이미지 업로드 (공유 페이지 링크 생성용)
-                        fetch('/uploadImage', {
-                            method: 'POST',
-                            // 컨트롤러가 @RequestBody String으로 받으므로 JSON.stringify 없이 보냄
-                            body: imageDataUrl
-                        }).then(res => {
-                            if (!res.ok) throw new Error('Server upload failed');
-                            return res.json();
-                        }),
-
-                        // B. 카카오 서버에 이미지 업로드 (카카오톡 썸네일용)
-                        Kakao.Share.uploadImage({
-                            file: [file]
-                        })
-                    ])
-                        .then(([serverData, kakaoData]) => {
-                            // 두 업로드가 모두 성공했을 때 공유 메시지 전송
-                            if (serverData.url && kakaoData.infos.original.url) {
-                                const shareUrl = window.location.origin + serverData.url;
-                                const kakaoImageUrl = kakaoData.infos.original.url;
-                                const width = canvas.width;
-                                const height = canvas.height;
-
-                                Kakao.Share.sendDefault({
-                                    objectType: 'feed',
-                                    content: {
-                                        title: '${title}',
-                                        description: '${date} 묵상 나눔',
-                                        imageUrl: kakaoImageUrl, // 카카오 서버에 올라간 이미지 사용
-                                        imageWidth: width,
-                                        imageHeight: height,
-                                        link: {
-                                            mobileWebUrl: shareUrl, // 클릭 시 이동할 우리 서버 페이지
-                                            webUrl: shareUrl
-                                        }
-                                    },
-                                    buttons: [
-                                        {
-                                            title: '묵상 보기',
-                                            link: {
-                                                mobileWebUrl: shareUrl,
-                                                webUrl: shareUrl
-                                            }
-                                        }
-                                    ]
-                                });
-                            } else {
-                                throw new Error('업로드 응답이 올바르지 않습니다.');
-                            }
-                        })
-                        .catch(error => {
-                            console.error('공유 처리 중 오류:', error);
-                            alert('카카오톡 공유에 실패했습니다.');
-                        });
-
-                });
-            }).catch(err => {
-                console.error("화면 캡처 실패:", err);
-                alert("화면 캡처에 실패했습니다.");
-            });
+        if (!Kakao.isInitialized()) {
+            alert('카카오 JavaScript 키가 설정되지 않았습니다. 코드를 확인해주세요.');
+            return;
         }
 
+        captureScreen().then(canvas => {
+            // 1. 우리 서버 업로드용 데이터 (Base64 String)
+            const imageDataUrl = canvas.toDataURL('image/png');
+
+            // 2. 카카오 서버 업로드용 데이터 (File Object)
+            canvas.toBlob(blob => {
+                const file = new File([blob], "qt_share.png", {type: "image/png"});
+
+                // 두 업로드 작업을 병렬로 처리
+                Promise.all([
+                    // A. 우리 서버에 이미지 업로드 (공유 페이지 링크 생성용)
+                    fetch('/uploadImage', {
+                        method: 'POST',
+                        // 컨트롤러가 @RequestBody String으로 받으므로 JSON.stringify 없이 보냄
+                        body: imageDataUrl
+                    }).then(res => {
+                        if (!res.ok) throw new Error('Server upload failed');
+                        return res.json();
+                    }),
+
+                    // B. 카카오 서버에 이미지 업로드 (카카오톡 썸네일용)
+                    Kakao.Share.uploadImage({
+                        file: [file]
+                    })
+                ])
+                    .then(([serverData, kakaoData]) => {
+                        // 두 업로드가 모두 성공했을 때 공유 메시지 전송
+                        if (serverData.url && kakaoData.infos.original.url) {
+                            const shareUrl = window.location.origin + serverData.url;
+                            const kakaoImageUrl = kakaoData.infos.original.url;
+                            const width = canvas.width;
+                            const height = canvas.height;
+
+                            Kakao.Share.sendDefault({
+                                objectType: 'feed',
+                                content: {
+                                    title: '${title}',
+                                    description: '${date} 묵상 나눔',
+                                    imageUrl: kakaoImageUrl, // 카카오 서버에 올라간 이미지 사용
+                                    imageWidth: width,
+                                    imageHeight: height,
+                                    link: {
+                                        mobileWebUrl: shareUrl, // 클릭 시 이동할 우리 서버 페이지
+                                        webUrl: shareUrl
+                                    }
+                                },
+                                buttons: [
+                                    {
+                                        title: '묵상 보기',
+                                        link: {
+                                            mobileWebUrl: shareUrl,
+                                            webUrl: shareUrl
+                                        }
+                                    }
+                                ]
+                            });
+                        } else {
+                            throw new Error('업로드 응답이 올바르지 않습니다.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('공유 처리 중 오류:', error);
+                        alert('카카오톡 공유에 실패했습니다.');
+                    });
+
+            });
+        }).catch(err => {
+            console.error("화면 캡처 실패:", err);
+            alert("화면 캡처에 실패했습니다.");
+        });
     }
 </script>
 </body>
