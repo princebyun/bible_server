@@ -26,6 +26,7 @@ public class CleanBotService {
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
 
+    
     @Value("${groq.api.key.file:./secrets/groq-api-key.txt}")
     private String groqApiKeyFilePath;
 
