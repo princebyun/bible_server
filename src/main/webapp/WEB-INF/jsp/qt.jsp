@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html>
+<html data-theme="light">
 <head>
     <meta charset="UTF-8">
     <title>오늘의 큐티본문</title>
@@ -29,12 +29,25 @@
         }
     </style>
 </head>
-<body>
+<body class="qt-page">
 
 <!-- 공통 메뉴 삽입 -->
 <%@ include file="menu.jsp" %>
 
 <div class="qt-page-container">
+    <!-- 다크/라이트 모드 토글 -->
+    <div class="d-flex justify-content-end mb-2">
+        <div class="theme-toggle-wrapper">
+            <label class="theme-toggle" title="다크/라이트 모드 전환">
+                <span class="theme-label active" id="lightLabel">라이트 모드</span>
+                <div class="toggle-switch">
+                    <input type="checkbox" id="themeToggle">
+                    <span class="toggle-knob"></span>
+                </div>
+                <span class="theme-label" id="darkLabel">다크 모드</span>
+            </label>
+        </div>
+    </div>
     <c:choose>
         <c:when test="${not empty error}">
             <div class="alert alert-danger mt-4" role="alert">
@@ -86,6 +99,38 @@
 
 <script src="<c:url value='/webjars/bootstrap/5.3.0/js/bootstrap.bundle.min.js'/>"></script>
 <script>
+    // ===== 다크/라이트 모드 =====
+    (function() {
+        var toggle = document.getElementById('themeToggle');
+        var html = document.documentElement;
+        var lightLabel = document.getElementById('lightLabel');
+        var darkLabel = document.getElementById('darkLabel');
+        var saved = localStorage.getItem('qt-theme');
+
+        function updateLabels(isDark) {
+            if (isDark) {
+                lightLabel.classList.remove('active');
+                darkLabel.classList.add('active');
+            } else {
+                lightLabel.classList.add('active');
+                darkLabel.classList.remove('active');
+            }
+        }
+
+        if (saved === 'dark') {
+            html.setAttribute('data-theme', 'dark');
+            toggle.checked = true;
+            updateLabels(true);
+        }
+
+        toggle.addEventListener('change', function() {
+            var isDark = this.checked;
+            html.setAttribute('data-theme', isDark ? 'dark' : 'light');
+            localStorage.setItem('qt-theme', isDark ? 'dark' : 'light');
+            updateLabels(isDark);
+        });
+    })();
+
     // 카카오 SDK 초기화
     try {
         Kakao.init('58f34b0958d81c971284547077722431');
@@ -96,9 +141,10 @@
     // 공통 캡처 함수
     function captureScreen() {
         const captureArea = document.getElementById("capture-area");
+        var captureBg = getComputedStyle(document.documentElement).getPropertyValue('--qt-capture-bg').trim();
         return html2canvas(captureArea, {
             scale: 2,
-            backgroundColor: "#f0f8ff",
+            backgroundColor: captureBg || "#f0f8ff",
             logging: false,
             useCORS: true,
             onclone: (clonedDoc) => {
