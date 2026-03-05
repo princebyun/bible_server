@@ -148,16 +148,68 @@ body {
     color: #00BFFF; /* 강조 색상도 하늘색 계열로 변경 */
 }
 
-/* 모바일 환경 헤더 메뉴 간격 조정 (991px -> 767px) */
-@media (max-width: 767px) {
-    .site-header .navbar-collapse {
-        padding-top: 15px; /* 메뉴 상단 여백 */
+/* 태블릿 대응 (768px ~ 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .site-header .navbar-brand {
+        font-size: 1.3rem;
     }
     .site-header .nav-item {
-        margin: 8px 0; /* 각 메뉴의 상하 간격 추가 */
+        margin: 0 4px;
     }
     .site-header .nav-link {
-        display: block; /* 링크를 블록 요소로 만들어 전체 영역 클릭 가능하게 */
+        font-size: 0.85rem;
+        padding: 0.5rem 0.8rem;
+    }
+    .container {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+    }
+    .page-title {
+        font-size: 1.5rem;
+        margin-bottom: 1.2rem;
+    }
+    .filter-form {
+        padding: 1.2rem;
+        margin-bottom: 1.2rem;
+    }
+    .filter-form .col-md-3,
+    .filter-form .col-md-2 {
+        flex: 0 0 50%;
+        max-width: 50%;
+        margin-bottom: 0.5rem;
+    }
+    .accordion-body {
+        padding: 1rem;
+    }
+    .bible-verse {
+        padding: 0.5rem 0;
+    }
+    .bible-verse strong {
+        margin-right: 0.5rem;
+    }
+}
+
+/* 모바일 환경 헤더 메뉴 간격 조정 */
+@media (max-width: 767px) {
+    .site-header .navbar-collapse {
+        padding-top: 15px;
+    }
+    .site-header .nav-item {
+        margin: 8px 0;
+    }
+    .site-header .nav-link {
+        display: block;
         width: 100%;
+    }
+    .container {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+    .page-title {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+    }
+    .filter-form {
+        padding: 1rem;
     }
 }

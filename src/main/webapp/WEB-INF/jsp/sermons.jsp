@@ -44,7 +44,7 @@
             border-top: 1px solid #f1f1f1;
         }
 
-        /* 유튜브 버튼 (common.css의 btn-primary 스타일과 유사하게) */
+        /* 유튜브 버튼 */
         .btn-youtube {
             background-color: #00BFFF;
             border-color: #00BFFF;
@@ -55,6 +55,17 @@
             background-color: #009ACD;
             border-color: #009ACD;
             color: white;
+        }
+
+        /* 태블릿 대응 */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .card-title {
+                font-size: 0.9rem;
+                min-height: 2.6em;
+            }
+            .card-img-top {
+                aspect-ratio: 16 / 9;
+            }
         }
     </style>
 </head>
@@ -85,7 +96,7 @@
             </div>
         </c:when>
         <c:otherwise>
-            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-4 g-4">
                 <c:forEach var="video" items="${videos}">
                     <div class="col">
                         <a href="${video.link}" target="_blank" class="text-decoration-none">

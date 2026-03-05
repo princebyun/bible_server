@@ -348,6 +348,62 @@ body.qt-page .dropdown-item:hover {
     flex-shrink: 0;
 }
 
+/* 태블릿 대응 (768px ~ 1024px) */
+@media (min-width: 768px) and (max-width: 1024px) {
+    body, html {
+        height: auto;
+        overflow: auto;
+    }
+    .qt-page-container {
+        height: auto;
+        padding: 1rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+    }
+    #capture-area {
+        height: auto;
+        overflow: visible;
+    }
+    #capture-area .col-md-6 {
+        height: auto;
+    }
+    .qt-content-area {
+        height: auto;
+        min-height: 400px;
+        max-height: 500px;
+        overflow: hidden;
+    }
+    .qt-body {
+        max-height: 320px;
+        overflow-y: auto;
+    }
+    .qt-note-area {
+        height: auto;
+        min-height: 400px;
+    }
+    .note-textarea {
+        min-height: 280px;
+    }
+    .theme-toggle-wrapper {
+        padding: 0.4rem 0.8rem;
+    }
+    .theme-label {
+        font-size: 0.85rem;
+    }
+    .toggle-switch {
+        width: 54px;
+        height: 28px;
+        border-radius: 14px;
+    }
+    .toggle-knob {
+        width: 22px;
+        height: 22px;
+    }
+    .toggle-switch input:checked ~ .toggle-knob {
+        transform: translateX(26px);
+    }
+}
+
 /* 모바일 대응 (767px 이하) */
 @media (max-width: 767px) {
     body, html {
@@ -372,5 +428,23 @@ body.qt-page .dropdown-item:hover {
     }
     .note-textarea {
         min-height: 300px;
+    }
+    .theme-toggle-wrapper {
+        padding: 0.4rem 0.8rem;
+    }
+    .theme-label {
+        font-size: 0.85rem;
+    }
+    .toggle-switch {
+        width: 50px;
+        height: 26px;
+        border-radius: 13px;
+    }
+    .toggle-knob {
+        width: 20px;
+        height: 20px;
+    }
+    .toggle-switch input:checked ~ .toggle-knob {
+        transform: translateX(24px);
     }
 }

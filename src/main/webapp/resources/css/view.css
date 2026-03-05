@@ -1,3 +1,27 @@
 .filter-form { margin-bottom: 30px; padding: 20px; background-color: #f8f9fa; border-radius: 8px; }
 .bible-verse { border-bottom: 1px solid #eee; padding: 10px 0; }
 .bible-verse:last-child { border-bottom: none; }
+
+/* 태블릿 대응 */
+@media (min-width: 768px) and (max-width: 1024px) {
+    .filter-form {
+        padding: 15px;
+        margin-bottom: 20px;
+    }
+    .bible-verse {
+        padding: 8px 0;
+        font-size: 0.95rem;
+    }
+}
+
+/* 모바일 대응 */
+@media (max-width: 767px) {
+    .filter-form {
+        padding: 12px;
+        margin-bottom: 15px;
+    }
+    .bible-verse {
+        padding: 6px 0;
+        font-size: 0.9rem;
+    }
+}

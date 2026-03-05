@@ -10,6 +10,13 @@
     <style>
         .result-safe { border: 2px solid #198754; }
         .result-unsafe { border: 2px solid #dc3545; }
+
+        /* 태블릿 대응 */
+        @media (min-width: 768px) and (max-width: 1024px) {
+            .container { max-width: 680px; }
+            .page-title { font-size: 1.4rem; }
+            #textInput { rows: 6; font-size: 0.95rem; }
+        }
     </style>
 </head>
 <body>
